@@ -1,0 +1,49 @@
+from sklearn.metrics import roc_auc_score
+from matplotlib import pyplot
+import warnings
+warnings.filterwarnings("ignore")
+from sklearn.metrics import accuracy_score
+import numpy as np
+import math
+import pandas as pd
+import glob
+import matplotlib.pyplot as plt
+from random import choice
+from XGBensemble_utils import *
+
+train_file = '/home/yared/文件/HCSZ/all(TMT)v/ch1_16/train'
+val_file   = '/home/yared/文件/HCSZ/all(TMT)v/ch1_16/val'
+path = '/home/yared/文件/HCSZ/'
+
+class_ = glob.glob(train_file + '/*')
+class_name = []
+for name in class_:
+    class_name.append(name.split('/')[-1])
+
+filename = glob.glob('/home/yared/文件/HCSZ/all(TMT)/ch1_16/test/SZ/B/*.csv')
+im_name = []
+for i in filename:
+    n = i.split('/')[-1].split('.')[0]
+    im_name.append(n)
+    for file in im_name:
+        data = pd.read_csv('/home/yared/文件/HCSZ/all(TMT)/ch1_16/test/SZ/B/' + file + '.csv')
+        data1 = np.array(data)[:,5]
+        data1 = np.reshape(data1,data1.shape+(1,))
+        data2 = np.array(data)[:,6]
+        data2 = np.reshape(data2,data2.shape+(1,))
+        data3 = np.array(data)[:,8]
+        data3 = np.reshape(data3,data3.shape+(1,))
+        data4 = np.array(data)[:,9]
+        data4 = np.reshape(data4,data4.shape+(1,))
+        data5 = np.array(data)[:,11]
+        data5 = np.reshape(data5,data5.shape+(1,))
+        total = (data1+data2+data3)/5
+        gg = total
+        plt.figure()
+        plt.plot(gg)
+        plt.savefig('/home/yared/文件/HCSZ/check/MPFC/SZ/B/'+file+'.jpg')
+        plt.show()
+
+
+
+    
